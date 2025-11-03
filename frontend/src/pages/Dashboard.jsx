@@ -9,8 +9,30 @@ import HistoryControls from '../components/HistoryControls';
 
 import './Dashboard.css';
 
+// Helper function to add data to our state object
+// and keep it limited to 20 data points.
+const addDataToDevice = (prevData, deviceId, newDataPoint) => {
+  const deviceData = prevData[deviceId] ? [...prevData[deviceId]] : [];
+  deviceData.push(newDataPoint);
+  if (deviceData.length > 20) {
+    deviceData.shift(); // Remove the oldest data point
+  }
+  return {
+    ...prevData,
+    [deviceId]: deviceData,
+  };
+};
+
 function Dashboard() {
-  const [chartData, setChartData] = useState([]);
+  // --- NEW STATE LOGIC ---
+  // We now store data in an object, with one array per device.
+  // This prevents the "blanking" issue when switching.
+  const [chartData, setChartData] = useState({
+    all: [],
+    'dev-001': [],
+    'dev-002': [],
+    'dev-003': [],
+  });
   const [selectedDevice, setSelectedDevice] = useState('all');
   const [devicePresence, setDevicePresence] = useState({});
 
@@ -34,26 +56,30 @@ function Dashboard() {
         });
       }
 
-      // 2. Update Chart Data
-      setChartData((prevData) => {
-        // --- THIS IS THE FIX ---
-        // We now combine the data (temp, humidity) with
-        // the timestamp into a single object.
-        const newDataPoint = {
-          ...latestTelemetry.data,
-          timestamp: latestTelemetry.timestamp,
-        };
-        // --- END OF FIX ---
+      // 2. Create the new data point
+      const newDataPoint = {
+        ...latestTelemetry.data,
+        timestamp: latestTelemetry.sensorTimestamp, // Use the correct timestamp
+      };
 
-        const updatedData = [...prevData, newDataPoint];
-        if (updatedData.length > 20) {
-          return updatedData.slice(1); // Keep only the last 20
-        }
+      // 3. Update Chart Data state
+      setChartData((prevData) => {
+        let updatedData = prevData;
+
+        // Add data to the 'all' list
+        updatedData = addDataToDevice(updatedData, 'all', newDataPoint);
+
+        // Add data to the specific device's list
+        updatedData = addDataToDevice(
+            updatedData,
+            latestTelemetry.deviceId,
+            newDataPoint
+        );
+
         return updatedData;
       });
 
-      // 3. Update Device Presence
-      // This is a simplified presence logic
+      // 4. Update Device Presence
       setDevicePresence((prevPresence) => ({
         ...prevPresence,
         [latestTelemetry.deviceId]: {
@@ -68,8 +94,12 @@ function Dashboard() {
     console.log(`Fetching history for ${selectedDevice} in range: ${timeRange}`);
     try {
       const historyData = await fetchHistory(selectedDevice, timeRange);
-      // The backend already formats history data correctly, so this works
-      setChartData(historyData);
+      // When history loads, we only update the chart for
+      // the currently selected device.
+      setChartData(prevData => ({
+        ...prevData,
+        [selectedDevice]: historyData,
+      }));
     } catch (error) {
       toast.error('Failed to fetch history: ' + error.message);
     }
@@ -87,6 +117,8 @@ function Dashboard() {
           </div>
         </header>
 
+        //made with love form otter
+
         <aside className="dashboard-sidebar">
           <h2>Devices</h2>
           <DeviceStatus
@@ -102,7 +134,10 @@ function Dashboard() {
           </div>
           <div className="dashboard-chart-container">
             <LiveChart
-                data={chartData}
+                // --- THE FINAL FIX ---
+                // We pass the correct data array from our state
+                // object based on which device is selected.
+                data={chartData[selectedDevice]}
                 deviceName={
                   selectedDevice === 'all' ? 'All Devices' : selectedDevice
                 }
@@ -114,3 +149,4 @@ function Dashboard() {
 }
 
 export default Dashboard;
+
