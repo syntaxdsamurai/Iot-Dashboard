@@ -1,0 +1,41 @@
+/* * This file contains the primary layout styles for the App component.
+ * We use a CSS grid to create a simple header, main, and footer layout.
+ */
+.App {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto; /* Header, Main (stretches), Footer */
+  background-color: var(--color-bg-secondary);
+}
+
+/* * We'll style a common 'header' and 'footer' class, 
+ * even though we aren't adding them in App.jsx *yet*.
+ * This prepares us for when we do.
+ */
+.App-header {
+  padding: 1rem 2rem;
+  background-color: var(--color-bg-primary);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.App-footer {
+  padding: 1rem 2rem;
+  text-align: center;
+  font-size: 0.875rem;
+  background-color: var(--color-bg-primary);
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+}
+
+/* * A 'main' container for the dashboard content.
+ * This will ensure our dashboard page has consistent padding.
+ */
+.App main {
+  padding: 1.5rem;
+  overflow-y: auto; /* Allows content to scroll if it's too tall */
+}

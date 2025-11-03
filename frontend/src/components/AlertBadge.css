@@ -1,0 +1,50 @@
+/*
+ * Styles for the AlertBadge.jsx component.
+ */
+.alert-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px; /* Pill shape */
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+
+.alert-icon {
+  display: inline-block;
+  font-weight: 700;
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  line-height: 14px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* --- Badge Types --- */
+
+/* Warning (e.g., high temperature) */
+.alert-badge.warning {
+  background-color: rgba(250, 173, 20, 0.1);
+  border-color: var(--color-warning);
+  color: var(--color-warning);
+}
+
+.alert-badge.warning .alert-icon {
+  background-color: var(--color-warning);
+  color: #ffffff;
+}
+
+/* Error (e.g., device offline, critical failure) */
+.alert-badge.error {
+  background-color: rgba(245, 34, 45, 0.1);
+  border-color: var(--color-error);
+  color: var(--color-error);
+}
+
+.alert-badge.error .alert-icon {
+  background-color: var(--color-error);
+  color: #ffffff;
+}

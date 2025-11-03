@@ -1,0 +1,80 @@
+/*
+ * Styles for the DeviceStatus.jsx component.
+ */
+.device-status-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.device-item {
+  /* Reset button styles */
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 0.95rem;
+  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: left;
+  color: var(--color-text-primary);
+  border: 1px solid transparent; /* Placeholder for hover/selected */
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.device-item:hover {
+  background-color: var(--color-bg-secondary);
+}
+
+/* Style for the currently selected device button */
+.device-item.selected {
+  background-color: rgba(22, 119, 255, 0.1);
+  border-color: var(--color-accent);
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
+.device-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.device-name {
+  font-weight: 500;
+}
+
+.device-last-seen {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+/* The colored status dot */
+.device-status-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+}
+
+.device-status-indicator.online {
+  background-color: var(--color-success);
+  box-shadow: 0 0 8px rgba(82, 196, 26, 0.7);
+}
+
+.device-status-indicator.offline {
+  background-color: var(--color-text-secondary);
+  opacity: 0.5;
+}
+
+.no-devices-msg {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  text-align: center;
+  padding: 1rem 0;
+}

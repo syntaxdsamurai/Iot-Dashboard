@@ -1,0 +1,98 @@
+/*
+ * Styles for the Dashboard.jsx component.
+ * We use CSS Grid for the main layout.
+ */
+.dashboard-layout {
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "sidebar main";
+  grid-template-columns: 240px 1fr; /* Sidebar width and Main content (stretches) */
+  grid-template-rows: auto 1fr;
+  height: calc(100vh - 3rem); /* Full height minus the App's padding */
+  width: 100%;
+  gap: 1.5rem;
+}
+
+/* --- Header Area --- */
+.dashboard-header {
+  grid-area: header;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  font-size: 1.75rem;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.status-indicator span {
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.status-indicator .connected {
+  color: var(--color-success);
+  background-color: rgba(82, 196, 26, 0.1);
+}
+
+.status-indicator .disconnected {
+  color: var(--color-error);
+  background-color: rgba(245, 34, 45, 0.1);
+}
+
+/* --- Sidebar Area --- */
+.dashboard-sidebar {
+  grid-area: sidebar;
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.dashboard-sidebar h2 {
+  margin-top: 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 1.25rem;
+}
+
+/* --- Main Content Area --- */
+.dashboard-main {
+  grid-area: main;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.dashboard-controls {
+  flex-shrink: 0; /* Prevents controls from shrinking */
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.dashboard-chart-container {
+  flex-grow: 1; /* Allows chart container to fill remaining space */
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  
+  /* This ensures Chart.js behaves correctly */
+  position: relative;
+  min-height: 400px; 
+}

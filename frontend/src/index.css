@@ -1,0 +1,61 @@
+/* Define the color palette and typography for the entire app */
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+
+  /* Color variables for Light Mode */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f0f2f5;
+  --color-text-primary: #1f1f1f;
+  --color-text-secondary: #4a4a4a;
+  --color-border: #d9d9d9;
+  --color-accent: #1677ff;
+  --color-success: #52c41a;
+  --color-warning: #faad14;
+  --color-error: #f5222d;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Define colors for Dark Mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg-primary: #141414;
+    --color-bg-secondary: #1f1f1f;
+    --color-text-primary: #e0e0e0;
+    --color-text-secondary: #a8a8a8;
+    --color-border: #424242;
+    --color-accent: #1668e0;
+    --color-success: #49aa19;
+    --color-warning: #d48806;
+    --color-error: #cf1322;
+  }
+}
+
+/* Apply base styles to the body */
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+}
+
+/* Set box-sizing to border-box for all elements.
+  This makes sizing elements (width/height) more intuitive 
+  as padding and border will be included in the total size.
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
