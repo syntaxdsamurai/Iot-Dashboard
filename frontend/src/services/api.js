@@ -4,6 +4,9 @@ import axios from 'axios';
 // defaulting to localhost:3001 for development.
 const API_BASE_URL = import.meta.env.VITE_SERVER_URL || 'http://localhost:3001';
 
+// Log the API base URL for debugging (helpful during deployment)
+console.log('🌐 API Base URL:', API_BASE_URL);
+
 /**
  * Create a pre-configured instance of axios.
  * All API requests will go through this instance.
@@ -64,7 +67,7 @@ export const fetchAggregates = async (deviceId, timeRange) => {
   } catch (error) {
     console.error('Error fetching aggregate data:', error);
     throw new Error(
-      error.response?.data?.message || 'Failed to fetch aggregates'
+        error.response?.data?.message || 'Failed to fetch aggregates'
     );
   }
 };

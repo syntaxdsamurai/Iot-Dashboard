@@ -6,12 +6,13 @@ export const initSocketService = (httpServer) => {
   if (!io) {
     io = new Server(httpServer, {
       cors: {
-        origin: "*",
+        origin: process.env.CLIENT_URL || "*",
         methods: ['GET', 'POST'],
+        credentials: true,
       },
     });
 
-    console.log('Socket.IO service initialized');
+    console.log('🔌 Socket.IO service initialized');
 
     // --- Main Connection Handler ---
     io.on('connection', (socket) => {
@@ -27,21 +28,21 @@ export const initSocketService = (httpServer) => {
             socket.leave(room);
           }
         });
-        
+
         // Join the new room
         socket.join(roomName);
-        console.log(`Client ${socket.id} joined room: ${roomName}`);
+        console.log(`✅ Client ${socket.id} joined room: ${roomName}`);
       });
 
       // Listen for a client request to leave a room
       socket.on('leave-room', (roomName) => {
         socket.leave(roomName);
-        console.log(`Client ${socket.id} left room: ${roomName}`);
+        console.log(`👋 Client ${socket.id} left room: ${roomName}`);
       });
 
       // --- Disconnect Handler ---
       socket.on('disconnect', (reason) => {
-        console.log(`Client disconnected: ${socket.id}. Reason: ${reason}`);
+        console.log(`❌ Client disconnected: ${socket.id}. Reason: ${reason}`);
       });
     });
   }
@@ -58,4 +59,3 @@ export const getIO = () => {
   }
   return io;
 };
-

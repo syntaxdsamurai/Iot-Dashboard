@@ -13,6 +13,7 @@ const app = express();
 // 1. Configure CORS
 const corsOptions = {
   origin: process.env.CLIENT_URL || 'http://localhost:5173',
+  credentials: true, // Allow credentials (cookies, authorization headers)
   optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
@@ -36,6 +37,7 @@ app.get('/', (req, res) => {
   res.status(200).json({
     status: 'ok',
     message: 'IoT Backend Service is running',
+    timestamp: new Date().toISOString(),
   });
 });
 
