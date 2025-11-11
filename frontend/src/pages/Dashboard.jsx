@@ -117,7 +117,7 @@ function Dashboard() {
           </div>
         </header>
 
-        //made with love form otter
+        {/*made with love form otter*/}
 
         <aside className="dashboard-sidebar">
           <h2>Devices</h2>
